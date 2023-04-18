@@ -1,11 +1,11 @@
 var textAreaEl = document.getElementById('team-search');
 var searchBtn = document.getElementById('search-btn');
+var currentTeamEl = document.getElementById('user-team-name');
 
 // saves user input
 searchBtn.addEventListener('click', function(event) {
   event.preventDefault();
   var userInput = textAreaEl.value;
-  
   
   const options = {
     method: 'GET',
@@ -20,7 +20,10 @@ searchBtn.addEventListener('click', function(event) {
       return response.json();
     })
     .then(function(data) {
-      console.log(data);
+      console.log(data.response[0]);
+      var currentTeam = data.response[0].name
+      console.log(currentTeam)
+      currentTeamEl.textContent = currentTeam
     })
     .catch(function(err) {
       console.error(err)
