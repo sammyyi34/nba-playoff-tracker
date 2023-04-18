@@ -24,6 +24,9 @@ searchBtn.addEventListener('click', function(event) {
       var currentTeam = data.response[0].name
       console.log(currentTeam)
       currentTeamEl.textContent = currentTeam
+      var teamID = data.response[0].id
+      console.log(teamID)
+      
     })
     .catch(function(err) {
       console.error(err)
