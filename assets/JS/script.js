@@ -32,9 +32,8 @@ searchBtn.addEventListener('click', function(event) {
     .then(function(data) {
       // converts the user's searched team to corresponding team id
       var teamId = data.response[0].id
-      currentTeamEl.textContent = data.response[0].name
       //passes the value of teamID to the getOpp()
-      getOpp(teamId)
+      getOppId(teamId)
 
     })
     .catch(function(err) {
@@ -43,13 +42,13 @@ searchBtn.addEventListener('click', function(event) {
 })
 
 // takes the searched team's id and finds their playoff matchup
-function getOpp(teamId) {
-  const options = {
+function getOppId(teamId) {
+   const options = {
     method: 'GET',
     headers: {
         'X-RapidAPI-Key': 'e2a9fb97bamshed18b6fd03679f7p164ac8jsn8814d63a32e0',
         'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
-    }
+      }
   };
 
   fetch('https://api-nba-v1.p.rapidapi.com/games?league=standard&season=2022&team=' + teamId, options)
@@ -63,17 +62,17 @@ function getOpp(teamId) {
     var homeId = playOffGame[0].teams.home.id;
     var awayId = playOffGame[0].teams.visitors.id;
     // checks to see if searched team is the home or away by id and assigns the false to opponent
-    var oppName = homeId === teamId ? awayId : homeId;
     if (homeId === teamId) {
-      oppName = awayId;
+      oppId = awayId;
     } else {
-      oppName = homeId;
+      oppId = homeId;
     }
     //passes both user team id and opponent team id to getStats()
-    getStats(teamId, oppName);
+    getStats(homeId, awayId);
     // for every matchup between the 2 teams
-    var h2h = awayId + '-' + homeId;
-    // getLastGames(h2h);
+    var h2h = homeId + '-' + awayId;
+    getNames(h2h);
+    getLastGames(h2h);
     
   })
   .catch(function(err) {
@@ -81,9 +80,29 @@ function getOpp(teamId) {
   });
 }
 
+function getNames(homeId, awayId) {
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '1796dbdd1dmsh6234b7a56ccb43bp136d3djsn7e79ec7f91d2',
+      'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
+    }
+  };
+
+  fetch('https://api-nba-v1.p.rapidapi.com/games?league=standard&season=2022&h2h=' + awayId, options)
+  .then(function(response) {
+    return response.json();
+  }) 
+  .then(function(data) {
+    console.log(data);
+  })
+  .catch(function(err) {
+    console.log(err)
+  })
+}
+
 // a fetch call that grabs team stats
-function getStats(teamId, oppName) {
-  console.log(teamId, oppName)
+function getStats(homeId, awayId) {
   const options = {
     method: 'GET',
     headers: {
@@ -92,27 +111,68 @@ function getStats(teamId, oppName) {
     }
   };
   
-  fetch('https://api-nba-v1.p.rapidapi.com/teams/statistics?id=' + teamId + '&season=2022', options)
+  fetch('https://api-nba-v1.p.rapidapi.com/teams/statistics?id=' + homeId + '&season=2022', options)
   .then(function(response) {
     return response.json();
   })
   .then(function(data) {
-    var ftp = data.response[0].fgp;
+    var fgp = data.response[0].fgp;
     var tpp = data.response[0].tpp;
     var points = data.response[0].points;
-    console.log(tpp)
+  
     // displays team stats to corresponding element
-    userStat1.innerHTML += ' ' + ftp + '%';
+    
+    userStat1.innerHTML += ' ' + fgp + '%';
     userStat2.innerHTML += ' ' + tpp + '%';
     userStat3.innerHTML += ' ' + points + ' pts';
   })
   .catch(function(err) {
     console.error(err)
   });
+
+  fetch('https://api-nba-v1.p.rapidapi.com/teams/statistics?id=' + awayId + '&season=2022', options)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    var fgp = data.response[0].fgp;
+    var tpp = data.response[0].tpp;
+    var points = data.response[0].points;
+  
+    // displays team stats to corresponding element
+    oppTeamEl.textContent = data.response[0].name
+    oppStat1.innerHTML += ' ' + fgp + '%';
+    oppStat2.innerHTML += ' ' + tpp + '%';
+    oppStat3.innerHTML += ' ' + points + ' pts';
+  })
+  .catch(function(err) {
+    console.error(err)
+  });
+
 }
 
+function getLastGames(h2h) {
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '1796dbdd1dmsh6234b7a56ccb43bp136d3djsn7e79ec7f91d2',
+      'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
+    }
+  };
 
-
+  fetch('https://api-nba-v1.p.rapidapi.com/games?league=standard&season=2022&h2h=' + h2h, options)
+  .then(function(response) {
+    return response.json();
+  }) 
+  .then(function(data) {
+    var dataSet = data.response.filter(function(obj) {
+      return obj.status.long.toLowerCase() === "finished";
+    }).reverse().slice(0, 5);
+  })
+  .catch(function(err) {
+    console.log(err)
+  })
+}
 
 
 // make function that gets Local data
