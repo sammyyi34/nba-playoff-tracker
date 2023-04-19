@@ -23,8 +23,6 @@ searchBtn.addEventListener('click', function(event) {
       return response.json();
     })
     .then(function(data) {
-      console.log(data)
-      console.log(data.response[0].id)
       var teamId = data.response[0].id
       currentTeamEl.textContent = data.response[0].name
       getOpp(teamId)
@@ -36,35 +34,65 @@ searchBtn.addEventListener('click', function(event) {
 })
 
 
-
 function getOpp(teamId) {
-  console.log(teamId)
   const options = {
     method: 'GET',
     headers: {
         'X-RapidAPI-Key': 'e2a9fb97bamshed18b6fd03679f7p164ac8jsn8814d63a32e0',
         'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
     }
-};
+  };
 
-fetch('https://api-nba-v1.p.rapidapi.com/games?league=standard&season=2022&team=' + teamId, options)
+  fetch('https://api-nba-v1.p.rapidapi.com/games?league=standard&season=2022&team=' + teamId, options)
   .then(function(response) {
     return response.json();
   })
   .then(function(data) {
-    console.log(data)
     var playOffGame = data.response.slice(-1);
     var homeId = playOffGame[0].teams.home.id;
-    console.log(homeId);
     var awayId = playOffGame[0].teams.visitors.id;
-    console.log(awayId);
+    var oppName = homeId === teamId ? awayId : homeId;
+    if (homeId === teamId) {
+      oppName = awayId;
+    } else {
+      oppName = homeId;
+    }
+    console.log(oppName);
+    
+    
     var h2h = awayId + '-' + homeId;
-    console.log(h2h);
+    getLastGames(h2h);
     
   })
   .catch(function(err) {
     console.error(err)
   });
+}
+
+function getLastGames(h2h) {
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '1796dbdd1dmsh6234b7a56ccb43bp136d3djsn7e79ec7f91d2',
+      'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
+    }
+  };
+
+  fetch('https://api-nba-v1.p.rapidapi.com/games?league=standard&season=2022&h2h=' + h2h, options)
+
+  .then(function(response) {
+    return response.json();
+  }) 
+  .then(function(data) {
+    console.log(nextGame);
+    for (var i = 0; i < data.length; i++) {
+      console.log(data.length)
+    }
+
+  })
+  .catch(function(err) {
+    console.log(err)
+  })
 }
 
 
