@@ -9,9 +9,6 @@ var awayStat1 = document.getElementById('away-stat1');
 var awayStat2 = document.getElementById('away-stat2');
 var awayStat3 = document.getElementById('away-stat3');
 
-
-
-
 // saves user input then fetches that team
 searchBtn.addEventListener('click', function(event) {
   event.preventDefault();
@@ -30,6 +27,7 @@ searchBtn.addEventListener('click', function(event) {
       return response.json();
     })
     .then(function(data) {
+      console.log(data)
       // converts the user's searched team to corresponding team id
       var teamId = data.response[0].id
       console.log(teamId);
@@ -102,7 +100,9 @@ function getNames(h2h) {
     return response.json();
   }) 
   .then(function(data) {
-    var playOffGame = data.response.pop();
+    console.log(data);
+    var playOffGame = data.response;
+    var lastGame = playOffGame.pop();
     var homeName = playOffGame[0].teams.home.name;
     var awayName = playOffGame[0].teams.visitors.name;
     homeTeamEl.innerHTML = homeName;
@@ -114,8 +114,6 @@ function getNames(h2h) {
   })
 }
     
-
-
 // a fetch call that grabs team stats
 function getStats(homeId, awayId) {
   const options = {
@@ -164,7 +162,6 @@ function getStats(homeId, awayId) {
 
 }
 
-
 function getLastGames(h2h) {
   const options = {
     method: 'GET',
@@ -187,10 +184,3 @@ function getLastGames(h2h) {
     console.log(err)
   })
 }
-
-
-// make function that gets Local data
-// make function that fetches data and displays (make so only playoff teams show)
-// make function that determines winner
-// display the date of the game somewhere
-
