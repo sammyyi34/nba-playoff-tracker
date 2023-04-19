@@ -32,8 +32,15 @@ searchBtn.addEventListener('click', function(event) {
     .then(function(data) {
       // converts the user's searched team to corresponding team id
       var teamId = data.response[0].id
+      console.log(teamId);
       //passes the value of teamID to the getOpp()
       getOppId(teamId)
+      homeStat1.innerHTML = 'Field goal percentage:' + '';
+      homeStat2.innerHTML = '3-point percentage:' + '';
+      homeStat3.innerHTML = 'Total pts scored:' + '';
+      awayStat1.innerHTML = 'Field goal percentage:' + '';
+      awayStat2.innerHTML = '3-point percentage:' + '';
+      awayStat3.innerHTML = 'Total pts scored:' + '';
 
     })
     .catch(function(err) {
@@ -57,7 +64,8 @@ function getOppId(teamId) {
   })
   .then(function(data) {
     // targets the lastest game played (would not work in dynamic setting)
-    var playOffGame = data.response.slice(-1);
+    var playOffGame = data.response
+    var lastGame = playOffGame.pop();
     // distinguises searched team vs opponent by home/visiter id
     var homeId = playOffGame[0].teams.home.id;
     var awayId = playOffGame[0].teams.visitors.id;
@@ -94,9 +102,7 @@ function getNames(h2h) {
     return response.json();
   }) 
   .then(function(data) {
-    console.log(data);
-    var playOffGame = data.response.slice(-1);
-    console.log(playOffGame)
+    var playOffGame = data.response.pop();
     var homeName = playOffGame[0].teams.home.name;
     var awayName = playOffGame[0].teams.visitors.name;
     homeTeamEl.innerHTML = homeName;
@@ -107,6 +113,8 @@ function getNames(h2h) {
     console.log(err)
   })
 }
+    
+
 
 // a fetch call that grabs team stats
 function getStats(homeId, awayId) {
@@ -128,7 +136,6 @@ function getStats(homeId, awayId) {
     var points = data.response[0].points;
   
     // displays team stats to corresponding element
-    
     homeStat1.innerHTML += ' ' + fgp + '%';
     homeStat2.innerHTML += ' ' + tpp + '%';
     homeStat3.innerHTML += ' ' + points + ' pts';
@@ -156,6 +163,7 @@ function getStats(homeId, awayId) {
   });
 
 }
+
 
 function getLastGames(h2h) {
   const options = {
