@@ -99,6 +99,8 @@ function getNames(h2h) {
     console.log(playOffGame)
     var homeName = playOffGame[0].teams.home.name;
     var awayName = playOffGame[0].teams.visitors.name;
+    homeTeamEl.innerHTML = homeName;
+    awayTeamEl.innerHTML = awayName;
     
   })
   .catch(function(err) {
@@ -127,9 +129,9 @@ function getStats(homeId, awayId) {
   
     // displays team stats to corresponding element
     
-    userStat1.innerHTML += ' ' + fgp + '%';
-    userStat2.innerHTML += ' ' + tpp + '%';
-    userStat3.innerHTML += ' ' + points + ' pts';
+    homeStat1.innerHTML += ' ' + fgp + '%';
+    homeStat2.innerHTML += ' ' + tpp + '%';
+    homeStat3.innerHTML += ' ' + points + ' pts';
   })
   .catch(function(err) {
     console.error(err)
@@ -145,10 +147,9 @@ function getStats(homeId, awayId) {
     var points = data.response[0].points;
   
     // displays team stats to corresponding element
-    oppTeamEl.textContent = data.response[0].name
-    oppStat1.innerHTML += ' ' + fgp + '%';
-    oppStat2.innerHTML += ' ' + tpp + '%';
-    oppStat3.innerHTML += ' ' + points + ' pts';
+    awayStat1.innerHTML += ' ' + fgp + '%';
+    awayStat2.innerHTML += ' ' + tpp + '%';
+    awayStat3.innerHTML += ' ' + points + ' pts';
   })
   .catch(function(err) {
     console.error(err)
