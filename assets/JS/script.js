@@ -1,13 +1,13 @@
 var textAreaEl = document.getElementById('team-search');
 var searchBtn = document.getElementById('search-btn');
-var currentTeamEl = document.getElementById('user-team-name');
-var oppTeamEl = document.getElementById('opp-team-name');
-var userStat1 = document.getElementById('user-stat1');
-var userStat2 = document.getElementById('user-stat2');
-var userStat3 = document.getElementById('user-stat3');
-var oppStat1 = document.getElementById('opp-stat1');
-var oppStat2 = document.getElementById('opp-stat2');
-var oppStat3 = document.getElementById('opp-stat3');
+var homeTeamEl = document.getElementById('home-team-name');
+var awayTeamEl = document.getElementById('away-team-name');
+var homeStat1 = document.getElementById('home-stat1');
+var homeStat2 = document.getElementById('home-stat2');
+var homeStat3 = document.getElementById('home-stat3');
+var awayStat1 = document.getElementById('away-stat1');
+var awayStat2 = document.getElementById('away-stat2');
+var awayStat3 = document.getElementById('away-stat3');
 
 
 
@@ -80,7 +80,7 @@ function getOppId(teamId) {
   });
 }
 
-function getNames(homeId, awayId) {
+function getNames(h2h) {
   const options = {
     method: 'GET',
     headers: {
@@ -89,12 +89,17 @@ function getNames(homeId, awayId) {
     }
   };
 
-  fetch('https://api-nba-v1.p.rapidapi.com/games?league=standard&season=2022&h2h=' + awayId, options)
+  fetch('https://api-nba-v1.p.rapidapi.com/games?league=standard&season=2022&h2h=' + h2h, options)
   .then(function(response) {
     return response.json();
   }) 
   .then(function(data) {
     console.log(data);
+    var playOffGame = data.response.slice(-1);
+    console.log(playOffGame)
+    var homeName = playOffGame[0].teams.home.name;
+    var awayName = playOffGame[0].teams.visitors.name;
+    
   })
   .catch(function(err) {
     console.log(err)
