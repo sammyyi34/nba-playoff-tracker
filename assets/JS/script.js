@@ -27,10 +27,9 @@ searchBtn.addEventListener('click', function(event) {
       return response.json();
     })
     .then(function(data) {
-      console.log(data)
+      console.log(data);
       // converts the user's searched team to corresponding team id
       var teamId = data.response[0].id
-      console.log(teamId);
       //passes the value of teamID to the getOpp()
       getOppId(teamId)
       homeStat1.innerHTML = 'Field goal percentage:' + '';
@@ -62,8 +61,7 @@ function getOppId(teamId) {
   })
   .then(function(data) {
     // targets the lastest game played (would not work in dynamic setting)
-    var playOffGame = data.response
-    var lastGame = playOffGame.pop();
+    var playOffGame = data.response.slice(-1);
     // distinguises searched team vs opponent by home/visiter id
     var homeId = playOffGame[0].teams.home.id;
     var awayId = playOffGame[0].teams.visitors.id;
@@ -101,8 +99,7 @@ function getNames(h2h) {
   }) 
   .then(function(data) {
     console.log(data);
-    var playOffGame = data.response;
-    var lastGame = playOffGame.pop();
+    var playOffGame = data.response.slice(-1);
     var homeName = playOffGame[0].teams.home.name;
     var awayName = playOffGame[0].teams.visitors.name;
     homeTeamEl.innerHTML = homeName;
@@ -129,6 +126,7 @@ function getStats(homeId, awayId) {
     return response.json();
   })
   .then(function(data) {
+    console.log(data)
     var fgp = data.response[0].fgp;
     var tpp = data.response[0].tpp;
     var points = data.response[0].points;
