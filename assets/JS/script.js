@@ -11,11 +11,43 @@ var awayStat3 = document.getElementById('away-stat3');
 var homeImg = document.getElementById('home-logo');
 var awayImg = document.getElementById('away-logo');
 
+function onlyPlayoffTeams(userInput) {
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'e2a9fb97bamshed18b6fd03679f7p164ac8jsn8814d63a32e0',
+      'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
+    }
+  };
+  
+  // Get games starting from April 15, 2023 that are playoff games
+  const date = '2023-04-15';
+  const playoffs = true;
+  const url = `https://api-nba-v1.p.rapidapi.com/games?date=${date}&playoffs=${playoffs}`;
+  
+  fetch(url, options)
+    .then(response => response.json())
+    .then(response => {
+      // Check if the searched team is in the list of playoff teams
+      const teamName = userInput;
+      const playoffTeams = response.api.games.filter(game => game.playoffs === true)
+      if (playoffTeams.includes(teamName)) {
+        // Display playoff games
+        console.log(response);
+      } else {
+        // Display "unavailable" message
+        console.log("Unavailable: that team is not in the playoffs");
+      }
+    })
+    .catch(err => console.error(err));
+  
+}
 
 // saves user input then fetches that team
 searchBtn.addEventListener('click', function(event) {
   event.preventDefault();
   var userInput = textAreaEl.value;
+  onlyPlayoffTeams(userInput)
   const options = {
     method: 'GET',
     headers: {
@@ -155,7 +187,6 @@ function getStats(homeId, awayId) {
   .catch(function(err) {
     console.error(err)
   });
-
 }
 
 // grabs logos and assigns according to whos home or away
@@ -196,3 +227,35 @@ function getLogo(homeName, awayName) {
     console.log(err)
   })
 }
+
+var link1 = document.getElementById('link1');
+var link2 = document.getElementById('link2');
+var link3 = document.getElementById('link3');
+var link4 = document.getElementById('link4');
+
+const options = {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Key': 'e2a9fb97bamshed18b6fd03679f7p164ac8jsn8814d63a32e0',
+    'X-RapidAPI-Host': 'nba-latest-news.p.rapidapi.com'
+  }
+};
+
+fetch('https://nba-latest-news.p.rapidapi.com/articles?source=espn&limit=4', options)
+.then(function(response) {
+  return response.json();
+}) 
+.then(function(data) {
+  console.log(data)
+  link1.textContent = data[0].title;
+  link1.href = data[0].url;
+  link2.textContent = data[1].title;
+  link2.href = data[1].url;
+  link3.textContent = data[2].title;
+  link3.href = data[2].url;
+  link4.textContent = data[3].title;
+  link4.href = data[3].url;
+})
+.catch(function(err) {
+  console.log(err)
+})
