@@ -13,6 +13,21 @@
     font-size: 40px;
     font-weight: 100;
      color: rgb(255, 255, 255);
-   
+}
+
+.homeLogo {
+	width: 80px;
+	height: 80px;
+	margin-bottom: 5px;
+}
+
+.awayLogo {
+	width: 80px;
+	height: 80px;
+	margin-bottom: 8px;
+}
+
+.hide {
+	display: none;
 }
 

@@ -8,12 +8,14 @@ var homeStat3 = document.getElementById('home-stat3');
 var awayStat1 = document.getElementById('away-stat1');
 var awayStat2 = document.getElementById('away-stat2');
 var awayStat3 = document.getElementById('away-stat3');
+var homeImg = document.getElementById('home-logo');
+var awayImg = document.getElementById('away-logo');
+
 
 // saves user input then fetches that team
 searchBtn.addEventListener('click', function(event) {
   event.preventDefault();
   var userInput = textAreaEl.value;
-  
   const options = {
     method: 'GET',
     headers: {
@@ -27,7 +29,6 @@ searchBtn.addEventListener('click', function(event) {
       return response.json();
     })
     .then(function(data) {
-      console.log(data);
       // converts the user's searched team to corresponding team id
       var teamId = data.response[0].id
       //passes the value of teamID to the getOpp()
@@ -38,7 +39,6 @@ searchBtn.addEventListener('click', function(event) {
       awayStat1.innerHTML = 'Field goal percentage:' + '';
       awayStat2.innerHTML = '3-point percentage:' + '';
       awayStat3.innerHTML = 'Total pts scored:' + '';
-
     })
     .catch(function(err) {
       console.error(err)
@@ -71,19 +71,18 @@ function getOppId(teamId) {
     } else {
       oppId = homeId;
     }
-    //passes both user team id and opponent team id to getStats()
+  
     getStats(homeId, awayId);
     // for every matchup between the 2 teams
     var h2h = homeId + '-' + awayId;
     getNames(h2h);
-    getLastGames(h2h);
-    
   })
   .catch(function(err) {
     console.error(err)
   });
 }
 
+// gets the name of both teams by using their id numbers
 function getNames(h2h) {
   const options = {
     method: 'GET',
@@ -98,13 +97,13 @@ function getNames(h2h) {
     return response.json();
   }) 
   .then(function(data) {
-    console.log(data);
     var playOffGame = data.response.slice(-1);
     var homeName = playOffGame[0].teams.home.name;
     var awayName = playOffGame[0].teams.visitors.name;
     homeTeamEl.innerHTML = homeName;
     awayTeamEl.innerHTML = awayName;
-    
+  
+    getLogo(homeName, awayName)
   })
   .catch(function(err) {
     console.log(err)
@@ -126,12 +125,11 @@ function getStats(homeId, awayId) {
     return response.json();
   })
   .then(function(data) {
-    console.log(data)
     var fgp = data.response[0].fgp;
     var tpp = data.response[0].tpp;
     var points = data.response[0].points;
   
-    // displays team stats to corresponding element
+    // displays home team stats to corresponding element
     homeStat1.innerHTML += ' ' + fgp + '%';
     homeStat2.innerHTML += ' ' + tpp + '%';
     homeStat3.innerHTML += ' ' + points + ' pts';
@@ -149,7 +147,7 @@ function getStats(homeId, awayId) {
     var tpp = data.response[0].tpp;
     var points = data.response[0].points;
   
-    // displays team stats to corresponding element
+    // displays away team stats to corresponding element
     awayStat1.innerHTML += ' ' + fgp + '%';
     awayStat2.innerHTML += ' ' + tpp + '%';
     awayStat3.innerHTML += ' ' + points + ' pts';
@@ -160,7 +158,8 @@ function getStats(homeId, awayId) {
 
 }
 
-function getLastGames(h2h) {
+// grabs logos and assigns according to whos home or away
+function getLogo(homeName, awayName) {
   const options = {
     method: 'GET',
     headers: {
@@ -168,15 +167,30 @@ function getLastGames(h2h) {
       'X-RapidAPI-Host': 'api-nba-v1.p.rapidapi.com'
     }
   };
-
-  fetch('https://api-nba-v1.p.rapidapi.com/games?league=standard&season=2022&h2h=' + h2h, options)
+  
+  fetch('https://api-nba-v1.p.rapidapi.com/teams?name=' + homeName, options)
   .then(function(response) {
     return response.json();
   }) 
   .then(function(data) {
-    var dataSet = data.response.filter(function(obj) {
-      return obj.status.long.toLowerCase() === "finished";
-    }).reverse().slice(0, 5);
+    // gets home team logo and adds the src to already exisiting img src
+    var homeLogo = data.response[0].logo
+    homeImg.src = homeLogo
+    homeImg.classList.remove('hide')
+  })
+  .catch(function(err) {
+    console.log(err)
+  })
+
+  fetch('https://api-nba-v1.p.rapidapi.com/teams?name=' + awayName, options)
+  .then(function(response) {
+    return response.json();
+  }) 
+  .then(function(data) {
+    // gets away team logo and adds the src to already exisiting img src
+    var awayLogo = data.response[0].logo
+    awayImg.src = awayLogo
+    awayImg.classList.remove('hide')
   })
   .catch(function(err) {
     console.log(err)

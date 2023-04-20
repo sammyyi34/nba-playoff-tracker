@@ -61,20 +61,23 @@
 			<div class="card">
 				<div class="card-body">
 					<h5 class="card-title" id="newsUpdate"> News</h5>
-					<p><a href="https://www.espn.com/nba/" target="_blank">Latest NBA News</a></p> 
-					<p><a href="https://www.wnba.com/news/" target="_blank">Latest WNBA News</a></p>
-					<p><a href="https://www.espn.com/mlb/" target="_blank">Latest MLB News</a></p>
-					<p><a href="https://www.espn.com/nfl/" target="_blank">Latest NFL News</a></p>
+					<a href="" target="_blank" id="link1"></a>
+					<a id="link2" href="" target="_blank"></a>
+					<a id="link3" href="" target="_blank"></a>
+					<a id="link4" href="" target="_blank"></a>
 				</div>
-		</div>
+			</div>
+	</div>
 	</section>
 <!-- RIGHT SECTION -->
 	<!-- team 1 vs team 2 -->
-	<section>
+	<section class="container twoBoxes">
+		<div class="">
 			<div class="row">
-				<div class="col-sm-6 mb-3 mb-sm-0">
-					<div class="card">
+				<div class="col-sm-6">
+					<div class="card cardBody">
 						<div class="card-body">
+							<img src="" id="home-logo" class="homeLogo hide">
 							<h5 class="card-title" id="home-team-name">Home Team</h5>
 							<p class="card-text" id="home-stat1">Field goal percentage:</p>
 							<p class="card-text" id="home-stat2">3-point percentage:</p>
@@ -82,9 +85,15 @@
 						</div>
 					</div>
 				</div>
+				<div class="form-floating col-sm-2">
+					<input type="email" readonly class="form-control-plaintext" id="floatingEmptyPlaintextInput">
+					<label for="floatingEmptyPlaintextInput">vs</label>
+				</div>
+
 				<div class="col-sm-6">
-					<div class="card">
+					<div class="card cardBody">
 						<div class="card-body">
+							<img src="" id="away-logo" class="awayLogo hide">
 							<h5 class="card-title" id="away-team-name">Away Team</h5>
 							<p class="card-text" id="away-stat1">Field goal percentage:</p>
 							<p class="card-text" id="away-stat2">3-point percentage:</p>
@@ -92,10 +101,12 @@
 						</div>
 					</div>
 				</div>
+		</div>
 	</section>
 	
 	<!--PAUL'S CODE -->
-	<section></section>
+	<section>
+	</section>
 </body>
 </html>
 <!-- LINK TO JQUERY AND  JS FILE -->
