@@ -446,38 +446,3 @@ function getLogo(homeName, awayName) {
       console.log(err);
     });
 }
-
-var link1 = document.getElementById("link1");
-var link2 = document.getElementById("link2");
-var link3 = document.getElementById("link3");
-var link4 = document.getElementById("link4");
-
-const options = {
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Key": "e2a9fb97bamshed18b6fd03679f7p164ac8jsn8814d63a32e0",
-    "X-RapidAPI-Host": "nba-latest-news.p.rapidapi.com",
-  },
-};
-
-fetch(
-  "https://nba-latest-news.p.rapidapi.com/articles?source=espn&limit=4",
-  options
-)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    console.log(data);
-    link1.textContent = data[0].title;
-    link1.href = data[0].url;
-    link2.textContent = data[1].title;
-    link2.href = data[1].url;
-    link3.textContent = data[2].title;
-    link3.href = data[2].url;
-    link4.textContent = data[3].title;
-    link4.href = data[3].url;
-  })
-  .catch(function (err) {
-    console.log(err);
-  });
