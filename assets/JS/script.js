@@ -1,3 +1,4 @@
+// PAUL's CODE
 var textAreaEl = document.getElementById('team-search');
 var searchBtn = document.getElementById('search-btn');
 var currentTeamEl = document.getElementById('user-team-name');
@@ -103,3 +104,4 @@ function getLastGames(h2h) {
 				console.log(err)
 		})
 }
+// END OF PAUL's code
