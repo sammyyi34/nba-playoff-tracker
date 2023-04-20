@@ -115,25 +115,15 @@ gamesButtonEl.addEventListener("click", function (event) {
 
       console.log("Home: ", [i], response.response[i].teams.home.nickname);
       console.log(
-        "Visitors: ",
-        [i],
-        response.response[i].teams.visitors.nickname
-      );
+        "Visitors: ", [i],response.response[i].teams.visitors.nickname );
+      console.log("Home points: ", [i],response.response[i].scores.home.points);
       console.log(
-        "Home points: ",
-        [i],
-        response.response[i].scores.home.points
-      );
-      console.log(
-        "Visitors points : ",
-        [i],
-        response.response[i].scores.visitors.points
-      );
+        "Visitors points : ",[i],response.response[i].scores.visitors.points);
       console.log(response.response[i].teams.home.logo);
     }
   })
   .catch((err) => console.error(err));
-});
+},  {once : true});
 
 // saves user input then fetches that team
 searchBtn.addEventListener("click", function (event) {
