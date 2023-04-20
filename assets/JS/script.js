@@ -29,8 +29,6 @@ fetch('https://api-nba-v1.p.rapidapi.com/teams?search=' + userInput, options)
 	});
 })
 
-
-
 function getH2h(teamId) {
 
 const options = {
@@ -47,13 +45,9 @@ fetch('https://api-nba-v1.p.rapidapi.com/games?league=standard&season=2022&team=
 })
 .then(function(data) {
 		var playOffGame = data.response.slice(-1)
-		console.log(playOffGame);
 		var homeId = playOffGame[0].teams.home.id
-		console.log(homeId);
 		var awayId = playOffGame[0].teams.visitors.id
-		console.log(awayId);
 		var h2h = awayId + '-' + homeId
-		console.log(h2h);
 		getLastGames(h2h);
 })
 .catch(function(err) {
@@ -78,7 +72,6 @@ function getLastGames(h2h) {
 				return response.json();
 		}) 
 		.then(function(data) {
-			console.log(data);
 			var dataSet = data.response.filter(function(obj) {
 				return obj.status.long.toLowerCase() === "finished";
 			}).reverse().slice(0, 5);
@@ -105,16 +98,8 @@ function getLastGames(h2h) {
 			score3.textContent = dataSet[2].scores.home.points + " - " + dataSet[2].scores.visitors.points;
 			score4.textContent = dataSet[3].scores.home.points + " - " + dataSet[3].scores.visitors.points;
 			score5.textContent = dataSet[4].scores.home.points + " - " + dataSet[4].scores.visitors.points;
-
-			
-
-
-
-
-			console.log(dataSet);
 		})
 		.catch(function(err) {
 				console.log(err)
 		})
-
 }
