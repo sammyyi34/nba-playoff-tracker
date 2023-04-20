@@ -21,6 +21,45 @@
 <html>
 
 <body>
+	<header class="header">
+			<!--NAVBAR-->
+			<nav class="container-fluid my-3  ">
+					<!-- <div class="container-fluid my-100"> -->
+					<div class="row align-items-center ">
+							<!-- LOGO -->
+							<div class="col-5 d-flex ">
+									<h1 class=" title" href="#">
+											<img src="./assets/images/BBicon.png" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
+											Title will be here!
+											<img src="./assets/images/BBicon.png" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
+									</h1>
+							</div> 
+							<!-- LEFT LINKS -->
+							<div class="col-7 align-items-center ">
+									<ul class="nav d-flex d-flex justify-content-around ">
+											<li class="nav-item">
+											<a class="link" href="https://www.nba.com/news">News</a>
+											</li>
+											<li class="nav-item">
+											<a class="link" href="https://www.nba.com/standings">Standings</a>
+											</li>
+											<li class="nav-item">
+											<a class="link" href="https://nbatickets.nba.com/?cid=nba:tickets:institutional:nbacom:domsites:rd">Tickets</a>
+											</li>
+											<li class="nav-item">
+											<a class="link" href="https://www.espn.com/watch/">Watch Now</a>
+											</li>
+									</ul>
+							</div>
+					</div>
+				</nav>
+	</header>
+<!-- left section-->
+	
+	<!-- MADISON CODE -->
+	<section>
+  <div class="col-sm-2 mb-2 mb-sm-0"> 
+
     <header class="header">
         <!--NAVBAR-->
         <nav class="container-fluid my-3  ">
@@ -69,6 +108,7 @@
             </div>
         </nav>
     </header>
+    
     <!-- left section-->
     <!-- SEARCH BUTTON -->
     <section>
@@ -80,54 +120,46 @@
             </form>
         </div>
     </section>
-      <div class="col-sm-2 mb-2 mb-sm-0"> 
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title" id="newsUpdate"> News</h5>
-					<p><a href="https://www.espn.com/nba/" target="_blank">Latest NBA News</a></p> 
-					<p><a href="https://www.wnba.com/news/" target="_blank">Latest WNBA News</a></p>
-					<p><a href="https://www.espn.com/mlb/" target="_blank">Latest MLB News</a></p>
-					<p><a href="https://www.espn.com/nfl/" target="_blank">Latest NFL News</a></p>
+    
+<!-- RIGHT SECTION -->
+	<!-- team 1 vs team 2 -->
+	<section class="container twoBoxes">
+		<div class="">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="card cardBody">
+						<div class="card-body">
+							<img src="" id="home-logo" class="homeLogo hide">
+							<h5 class="card-title" id="home-team-name">Home Team</h5>
+							<p class="card-text" id="home-stat1">Field goal percentage:</p>
+							<p class="card-text" id="home-stat2">3-point percentage:</p>
+							<p class="card-text" id="home-stat3">Total pts scored:</p>
+						</div>
+					</div>
+				</div>
+				<div class="form-floating col-sm-2">
+					<input type="email" readonly class="form-control-plaintext" id="floatingEmptyPlaintextInput">
+					<label for="floatingEmptyPlaintextInput">vs</label>
+				</div>
+
+				<div class="col-sm-6">
+					<div class="card cardBody">
+						<div class="card-body">
+							<img src="" id="away-logo" class="awayLogo hide">
+							<h5 class="card-title" id="away-team-name">Away Team</h5>
+							<p class="card-text" id="away-stat1">Field goal percentage:</p>
+							<p class="card-text" id="away-stat2">3-point percentage:</p>
+							<p class="card-text" id="away-stat3">Total pts scored:</p>
+						</div>
+					</div>
 				</div>
 		</div>
-    <section>
+	</section>
+	
+	<!--PAUL'S CODE -->
+	<section>
+	</section>
 
-    </section>
-    <!-- RIGHT SECTION -->
-    <!-- team 1 vs team 2 -->
-    <section>
-        <div class="row">
-            <div class="col-sm-6 mb-3 mb-sm-0">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title" id="userTeamName">Special title treatment</h5>
-                        <p class="card-text" id="userStat1">With supporting text below as a natural lead-in to
-                            additional content.</p>
-                        <p class="card-text" id="userStat2">With supporting text below as a natural lead-in to
-                            additional content.</p>
-                        <p class="card-text" id="userStat3">With supporting text below as a natural lead-in to
-                            additional content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title" id="oppTeamName">Special title treatment</h5>
-                        <p class="card-text" id="oppStat1">With supporting text below as a natural lead-in to additional
-                            content.</p>
-                        <p class="card-text" id="oppStat2">With supporting text below as a natural lead-in to additional
-                            content.</p>
-                        <p class="card-text" id="oppStat3">With supporting text below as a natural lead-in to additional
-                            content.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!--PAUL'S CODE -->
-    <section></section>
 </body>
 
 </html>
