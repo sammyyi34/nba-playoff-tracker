@@ -12,38 +12,40 @@ var awayStat3 = document.getElementById("away-stat3");
 var homeImg = document.getElementById("home-logo");
 var awayImg = document.getElementById("away-logo");
 
-function onlyPlayoffTeams(userInput) {
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "e2a9fb97bamshed18b6fd03679f7p164ac8jsn8814d63a32e0",
-      "X-RapidAPI-Host": "api-nba-v1.p.rapidapi.com",
-    },
-  };
+// madison code
+var link1 = document.getElementById("link1");
+var link2 = document.getElementById("link2");
+var link3 = document.getElementById("link3");
+var link4 = document.getElementById("link4");
+const options = {
+  method: "GET",
+  headers: {
+    'X-RapidAPI-Key': '9277b1da26mshab4060e33beceb0p12fbc1jsn88d4dba937cd',
+		'X-RapidAPI-Host': 'nba-latest-news.p.rapidapi.com',
+  },
+};
 
-  // Get games starting from April 15, 2023 that are playoff games
-  const date = "2023-04-15";
-  const playoffs = true;
-  const url = `https://api-nba-v1.p.rapidapi.com/games?date=${date}&playoffs=${playoffs}`;
-
-  fetch(url, options)
-    .then((response) => response.json())
-    .then((response) => {
-      // Check if the searched team is in the list of playoff teams
-      const teamName = userInput;
-      const playoffTeams = response.api.games.filter(
-        (game) => game.playoffs === true
-      );
-      if (playoffTeams.includes(teamName)) {
-        // Display playoff games
-        console.log(response);
-      } else {
-        // Display "unavailable" message
-        console.log("Unavailable: that team is not in the playoffs");
-      }
-    })
-    .catch((err) => console.error(err));
-}
+fetch(
+  "https://nba-latest-news.p.rapidapi.com/articles?source=espn&limit=4",
+  options
+)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data);
+    link1.textContent = data[0].title;
+    link1.href = data[0].url;
+    link2.textContent = data[1].title;
+    link2.href = data[1].url;
+    link3.textContent = data[2].title;
+    link3.href = data[2].url;
+    link4.textContent = data[3].title;
+    link4.href = data[3].url;
+  })
+  .catch(function (err) {
+    console.log(err);
+  });
 
 // //  MARJORIE FETCH .
 var a = "";
@@ -87,9 +89,9 @@ gamesButtonEl.addEventListener("click", function (event) {
                   </div>
               </div>
               <!-- will display the logo -->
-              <div class="row text-center justify-content-around " id="teamsLogo">
+              <div class="row text-center justify-content-around align-items-center " id="teamsLogo">
                   <div class="col-5 text-center  " id="homeLogo">
-                      <img id="homeLogoImg"  width="40 "height="40" src='${
+                      <img id="homeLogoImg"  width="50 "height="50" src='${
                         ([i], response.response[i].teams.home.logo)
                       }' > 
                   </div>
@@ -97,7 +99,7 @@ gamesButtonEl.addEventListener("click", function (event) {
                       <p>VS</p> 
                   </div> 
                   <div class="col-5 text-center   " id="visitorLogo">
-                      <img id="visitorLogoImg"  width="40" height="40" src='${
+                      <img id="visitorLogoImg"  width="50" height="50" src='${
                         ([i], response.response[i].teams.visitors.logo)
                       }'>
                   </div>
@@ -116,25 +118,15 @@ gamesButtonEl.addEventListener("click", function (event) {
 
       console.log("Home: ", [i], response.response[i].teams.home.nickname);
       console.log(
-        "Visitors: ",
-        [i],
-        response.response[i].teams.visitors.nickname
-      );
+        "Visitors: ", [i],response.response[i].teams.visitors.nickname );
+      console.log("Home points: ", [i],response.response[i].scores.home.points);
       console.log(
-        "Home points: ",
-        [i],
-        response.response[i].scores.home.points
-      );
-      console.log(
-        "Visitors points : ",
-        [i],
-        response.response[i].scores.visitors.points
-      );
+        "Visitors points : ",[i],response.response[i].scores.visitors.points);
       console.log(response.response[i].teams.home.logo);
     }
   })
   .catch((err) => console.error(err));
-});
+},  {once : true});
 
 // saves user input then fetches that team
 searchBtn.addEventListener("click", function (event) {
