@@ -131,7 +131,6 @@ gamesButtonEl.addEventListener("click", function (event) {
 searchBtn.addEventListener("click", function (event) {
   event.preventDefault();
   var userInput = textAreaEl.value;
-  onlyPlayoffTeams(userInput);
   const options = {
     method: "GET",
     headers: {
