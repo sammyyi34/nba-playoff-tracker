@@ -1,4 +1,3 @@
-
 var textAreaEl = document.getElementById("team-search");
 var searchBtn = document.getElementById("search-btn");
 var homeTeamEl = document.getElementById("home-team-name");
